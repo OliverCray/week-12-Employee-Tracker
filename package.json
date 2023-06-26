@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/OliverCray/week-12-Employee-Tracker#readme",
   "dependencies": {
-    "express": "^4.18.2",
     "inquirer": "^8.2.4",
     "mysql2": "^3.4.2"
   }
