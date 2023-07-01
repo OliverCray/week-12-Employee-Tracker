@@ -38,7 +38,7 @@ class Queries {
     async selectEmployeesQuery() {
         try {
             const [rows, fields] = await db.query(
-                `SELECT employee.first_name, employee.last_name, role.title, department.name as department, role.salary,
+                `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary,
                 CONCAT(manager.first_name, ' ', manager.last_name) AS manager
                 FROM employee
                 INNER JOIN role ON employee.role_id = role.id
@@ -64,6 +64,18 @@ class Queries {
         try {
             await db.query('INSERT INTO role (title, salary, department_id) VALUES (?,?,?)', [role.title, role.salary, role.department_id])
             console.log(`Added ${role.title} to the list of roles`)
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async addEmployeeQuery(employee) {
+        try {
+            await db.query(
+                'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)', 
+                [employee.first_name, employee.last_name, employee.role_id, employee.manager_id]
+            )
+            console.log(`Added ${employee.first_name} ${employee.last_name} to the list of employees`)
         } catch (err) {
             throw err
         }
