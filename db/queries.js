@@ -43,7 +43,7 @@ class Queries {
                 FROM employee
                 INNER JOIN role ON employee.role_id = role.id
                 INNER JOIN department ON role.department_id = department.id
-                LEFT JOIN employee AS manager on employee.manager_id = manager.id`
+                LEFT JOIN employee AS manager ON employee.manager_id = manager.id`
             )
             return rows
         } catch (err) {
@@ -98,8 +98,25 @@ class Queries {
                 FROM employee 
                 INNER JOIN role ON employee.role_id = role.id
                 INNER JOIN department ON role.department_id = department.id
-                INNER JOIN employee AS manager on employee.manager_id = manager.id
+                INNER JOIN employee AS manager ON employee.manager_id = manager.id
                 WHERE manager.id = ?`, [employee.manager_id]
+            )
+            return rows
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async selectByDepartmentQuery(department) {
+        try {
+            const [rows, fields] = await db.query(
+                `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, 
+                CONCAT(manager.first_name, ' ', manager.last_name) AS manager
+                FROM employee
+                INNER JOIN role ON employee.role_id = role.id
+                INNER JOIN department ON role.department_id = department.id
+                LEFT JOIN employee AS manager ON employee.manager_id = manager.id
+                WHERE department.id = ?`, [department.department_id]
             )
             return rows
         } catch (err) {
