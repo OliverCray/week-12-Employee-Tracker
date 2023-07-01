@@ -13,6 +13,14 @@ const db = mysql.createConnection (
 class Queries {
     constructor () {}
 
+    async selectDepartments() {
+        try {
+            const [rows, fields] = await db.query('SELECT * FROM department')
+            return rows
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = Queries
