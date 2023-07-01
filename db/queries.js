@@ -122,6 +122,21 @@ class Queries {
             throw err
         }
     }
+
+    async selectCombinedSalaryQuery(department) {
+        try {
+            const [rows, fields] = await db.query(
+                `SELECT department.name as department, SUM(role.salary) AS "Total Salary"
+                FROM role
+                INNER JOIN employee ON employee.role_id = role.id
+                INNER JOIN department ON role.department_id = department.id
+                WHERE department.id = ?`, [department.department_id]
+            )
+            return rows
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = Queries
