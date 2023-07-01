@@ -59,6 +59,15 @@ class Queries {
             throw err
         }
     }
+
+    async addRoleQuery(role) {
+        try {
+            await db.query('INSERT INTO role (title, salary, department_id) VALUES (?,?,?)', [role.title, role.salary, role.department_id])
+            console.log(`Added ${role.title} to the list of roles`)
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = Queries
