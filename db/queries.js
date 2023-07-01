@@ -10,3 +10,9 @@ const db = mysql.createConnection (
       console.log('Connected to the employee_db database.')
 ).promise()
 
+class Queries {
+    constructor () {}
+
+}
+
+module.exports = Queries
