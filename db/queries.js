@@ -93,8 +93,7 @@ class Queries {
     async selectByManagerQuery(employee) {
         try {
             const [rows, fields] = await db.query(
-                `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, 
-                CONCAT(manager.first_name, ' ', manager.last_name) AS manager
+                `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary
                 FROM employee 
                 INNER JOIN role ON employee.role_id = role.id
                 INNER JOIN department ON role.department_id = department.id
@@ -110,7 +109,7 @@ class Queries {
     async selectByDepartmentQuery(department) {
         try {
             const [rows, fields] = await db.query(
-                `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, 
+                `SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, 
                 CONCAT(manager.first_name, ' ', manager.last_name) AS manager
                 FROM employee
                 INNER JOIN role ON employee.role_id = role.id
