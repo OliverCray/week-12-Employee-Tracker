@@ -80,6 +80,15 @@ class Queries {
             throw err
         }
     }
+
+    async updateEmployeeQuery(employee) {
+        try {
+            await db.query('UPDATE employee SET role_id=? WHERE id=?', [employee.role_id, employee.employee_id])
+            console.log('Updated employee record')
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = Queries
