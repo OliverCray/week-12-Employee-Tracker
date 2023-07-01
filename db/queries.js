@@ -13,7 +13,7 @@ const db = mysql.createConnection (
 class Queries {
     constructor () {}
 
-    async selectDepartments() {
+    async selectDepartmentsQuery() {
         try {
             const [rows, fields] = await db.query('SELECT * FROM department')
             return rows
@@ -22,7 +22,7 @@ class Queries {
         }
     }
 
-    async selectRoles() {
+    async selectRolesQuery() {
         try {
             const [rows, fields] = await db.query(
                 `SELECT role.id, role.title, department.name as department, role.salary
@@ -35,16 +35,26 @@ class Queries {
         }
     }
 
-    async selectEmployees() {
+    async selectEmployeesQuery() {
         try {
             const [rows, fields] = await db.query(
-                `SELECT employee.*, role.title, department.name, role.salary, manager.first_name as manager_first_name, manager.last_name as manager_last_name
+                `SELECT employee.first_name, employee.last_name, role.title, department.name as department, role.salary,
+                CONCAT(manager.first_name, ' ', manager.last_name) AS manager
                 FROM employee
                 INNER JOIN role ON employee.role_id = role.id
                 INNER JOIN department ON role.department_id = department.id
                 LEFT JOIN employee AS manager on employee.manager_id = manager.id`
             )
             return rows
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async addDepartmentQuery(department) {
+        try {
+            await db.query('INSERT INTO department (name) VALUES (?)', [department.name])
+            console.log(`Added ${department.name} to the list of departments`)
         } catch (err) {
             throw err
         }
