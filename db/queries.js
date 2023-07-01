@@ -21,6 +21,15 @@ class Queries {
             throw err
         }
     }
+
+    async selectRoles() {
+        try {
+            const [rows, fields] = await db.query('SELECT role.id, role.title, department.name as department, role.salary FROM role INNER JOIN department ON role.department_id = department.id')
+            return rows
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = Queries
