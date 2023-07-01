@@ -8,4 +8,5 @@ const db = mysql.createConnection (
         database: 'employee_db'
       },
       console.log('Connected to the employee_db database.')
-)
+).promise()
+
