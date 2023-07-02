@@ -132,7 +132,16 @@ class Queries {
     async updateEmployeeRoleQuery(employee) {
         try {
             await db.query('UPDATE employee SET role_id = ? WHERE id = ?', [employee.role_id, employee.employee_id])
-            console.log('Updated employee record')
+            console.log(`Updated ${emplooye.first_name} ${emplooye.last_name}'s role`)
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async updateEmployeeManagerQuery(emplooye) {
+        try {
+            await db.query('UPDATE employee SET manager_id = ? WHERE id = ?', [emplooye.manager_id, emplooye.employee_id])
+            console.log(`Updated ${emplooye.first_name} ${emplooye.last_name}'s manager`)
         } catch (err) {
             throw err
         }
