@@ -64,6 +64,7 @@ THEN I am prompted to select an employee to update and their new role and this i
     - Only roles that exist as part of a department will appear in the list of assignable roles
 - Choosing to update an employee role will prompt the user to choose the employee they wish to update and then ask the user to chooes their new role, this is then updated accordingly in the database
 - Choosing to delete a department will prompt the user to choose the department they wish to remove, this department will then be removed from the database
+    - All delete actions have a confirmation check before deleting the selected data
     - Any employees that were a part of that department will still appear in the list of employees alongside their role for the sake of clarity, however this role will no longer be assignable
 - Choosing to delete a role will prompt the user to choose the role they wish to remove, this role is then removed from the database
     - Roles that are not part of a department will appear in this list so that they can be deleted
@@ -72,7 +73,15 @@ THEN I am prompted to select an employee to update and their new role and this i
 
 ## Usage
 
-
+- Type **npm i** in the terminal to ensure that the correct dependencies have been installed
+- Navigative to db/queries.js and enter your details where it says const db = mysql.createConnection so that you can connect to the database
+    - These will be the same details you use to login to the MySQL shell
+- Type **mysql -u USERNAME -p**, where USERNAME is replaced by your username (for me this is root) in the terminal to login to MySQL shell
+    - Once in MySQL shell, to set up the database type **source db/schema.sql** and press enter
+    - To seed the database, type **source db/seeds.sql** and press enter
+    - You can then type **quit** to leave MySQL shell
+- Type **npm start** to run the application, from here you will be prompted to select which action you'd like to take
+- You can close the application from the main menu by choosing the **Quit** option, or by pressing Ctrl + C
 
 ## Screenshot
 
