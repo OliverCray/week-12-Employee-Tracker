@@ -146,6 +146,15 @@ class Queries {
             throw err
         }
     }
+
+    async deleteDepartmentQuery(department) {
+        try {
+            await db.query('DELETE FROM department WHERE id = ?', [department.department_id])
+            console.log('Department deleted')
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = Queries
