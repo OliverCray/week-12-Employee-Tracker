@@ -164,6 +164,15 @@ class Queries {
             throw err
         }
     }
+
+    async deleteEmployeeQuery(employee) {
+        try {
+            await db.query('DELETE FROM employee WHERE id = ?', [employee.employee_id])
+            console.log('Employee deleted')
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = Queries
