@@ -1,5 +1,7 @@
+// Import and require mysql2 module
 const mysql = require('mysql2')
 
+// Connect to employee_db database using .promise() function to make queries asynchronous
 const db = mysql.createConnection (
     {
         host: 'localhost',
@@ -10,11 +12,13 @@ const db = mysql.createConnection (
       console.log('Connected to the employee_db database.')
 ).promise()
 
+// Queries class, contains methods used for making queries to the database
 class Queries {
     constructor () {}
 
     async selectDepartmentsQuery() {
         try {
+            // Select all departments
             const [rows, fields] = await db.query('SELECT * FROM department')
             return rows
         } catch (err) {
@@ -22,9 +26,12 @@ class Queries {
         }
     }
 
-    async selectRolesQuery() {
+    async selectAllRolesQuery() {
         try {
             const [rows, fields] = await db.query(
+                // Select all roles and their respective department's name'
+                // LEFT JOIN ensures that the role still appears in the list of roles even after its department has been deleted
+                // This allows the role to still be deleted from the database
                 `SELECT role.id, role.title, department.name as department, role.salary
                 FROM role
                 LEFT JOIN department ON role.department_id = department.id`
@@ -35,9 +42,26 @@ class Queries {
         }
     }
 
+    async selectRolesQuery() {
+        try {
+            const [rows, fields] = await db.query(
+                // Select all roles with an associated department_id and their respective department's name'
+                // INNER JOIN means that any role that does not have a department will not appear in the list of assignable roles
+                `SELECT role.id, role.title, department.name as department, role.salary
+                FROM role
+                INNER JOIN department ON role.department_id = department.id`
+            )
+            return rows
+        } catch (err) {
+            throw err
+        }
+    }
+
     async selectEmployeesQuery() {
         try {
             const [rows, fields] = await db.query(
+                // Select all employees and their respective role, department and manager
+                // LEFT JOIN ensures that the employee information appears even if their role or department has been deleted
                 `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary,
                 CONCAT(manager.first_name, ' ', manager.last_name) AS manager
                 FROM employee
