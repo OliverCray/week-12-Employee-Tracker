@@ -27,7 +27,7 @@ class Queries {
             const [rows, fields] = await db.query(
                 `SELECT role.id, role.title, department.name as department, role.salary
                 FROM role
-                INNER JOIN department ON role.department_id = department.id`
+                LEFT JOIN department ON role.department_id = department.id`
             )
             return rows
         } catch (err) {
@@ -41,8 +41,8 @@ class Queries {
                 `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary,
                 CONCAT(manager.first_name, ' ', manager.last_name) AS manager
                 FROM employee
-                INNER JOIN role ON employee.role_id = role.id
-                INNER JOIN department ON role.department_id = department.id
+                LEFT JOIN role ON employee.role_id = role.id
+                LEFT JOIN department ON role.department_id = department.id
                 LEFT JOIN employee AS manager ON employee.manager_id = manager.id`
             )
             return rows
@@ -56,8 +56,8 @@ class Queries {
             const [rows, fields] = await db.query(
                 `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary
                 FROM employee 
-                INNER JOIN role ON employee.role_id = role.id
-                INNER JOIN department ON role.department_id = department.id
+                LEFT JOIN role ON employee.role_id = role.id
+                LEFT JOIN department ON role.department_id = department.id
                 INNER JOIN employee AS manager ON employee.manager_id = manager.id
                 WHERE manager.id = ?`, [employee.manager_id]
             )
@@ -87,7 +87,7 @@ class Queries {
     async selectCombinedSalaryQuery(department) {
         try {
             const [rows, fields] = await db.query(
-                `SELECT department.name as department, SUM(role.salary) AS "Total Salary"
+                `SELECT department.name as department, SUM(role.salary) AS "total salary"
                 FROM role
                 INNER JOIN employee ON employee.role_id = role.id
                 INNER JOIN department ON role.department_id = department.id
