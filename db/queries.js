@@ -155,6 +155,15 @@ class Queries {
             throw err
         }
     }
+    
+    async deleteRoleQuery(role) {
+        try {
+            await db.query('DELETE FROM role WHERE id = ?', [role.role_id])
+            console.log('Role deleted')
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = Queries
