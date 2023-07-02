@@ -51,45 +51,6 @@ class Queries {
         }
     }
 
-    async addDepartmentQuery(department) {
-        try {
-            await db.query('INSERT INTO department (name) VALUES (?)', [department.name])
-            console.log(`Added ${department.name} to the list of departments`)
-        } catch (err) {
-            throw err
-        }
-    }
-
-    async addRoleQuery(role) {
-        try {
-            await db.query('INSERT INTO role (title, salary, department_id) VALUES (?,?,?)', [role.title, role.salary, role.department_id])
-            console.log(`Added ${role.title} to the list of roles`)
-        } catch (err) {
-            throw err
-        }
-    }
-
-    async addEmployeeQuery(employee) {
-        try {
-            await db.query(
-                'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)', 
-                [employee.first_name, employee.last_name, employee.role_id, employee.manager_id]
-            )
-            console.log(`Added ${employee.first_name} ${employee.last_name} to the list of employees`)
-        } catch (err) {
-            throw err
-        }
-    }
-
-    async updateEmployeeQuery(employee) {
-        try {
-            await db.query('UPDATE employee SET role_id = ? WHERE id = ?', [employee.role_id, employee.employee_id])
-            console.log('Updated employee record')
-        } catch (err) {
-            throw err
-        }
-    }
-
     async selectByManagerQuery(employee) {
         try {
             const [rows, fields] = await db.query(
@@ -133,6 +94,45 @@ class Queries {
                 WHERE department.id = ?`, [department.department_id]
             )
             return rows
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async addDepartmentQuery(department) {
+        try {
+            await db.query('INSERT INTO department (name) VALUES (?)', [department.name])
+            console.log(`Added ${department.name} to the list of departments`)
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async addRoleQuery(role) {
+        try {
+            await db.query('INSERT INTO role (title, salary, department_id) VALUES (?,?,?)', [role.title, role.salary, role.department_id])
+            console.log(`Added ${role.title} to the list of roles`)
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async addEmployeeQuery(employee) {
+        try {
+            await db.query(
+                'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)', 
+                [employee.first_name, employee.last_name, employee.role_id, employee.manager_id]
+            )
+            console.log(`Added ${employee.first_name} ${employee.last_name} to the list of employees`)
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async updateEmployeeQuery(employee) {
+        try {
+            await db.query('UPDATE employee SET role_id = ? WHERE id = ?', [employee.role_id, employee.employee_id])
+            console.log('Updated employee record')
         } catch (err) {
             throw err
         }
